@@ -8,7 +8,8 @@ import {
 } from "react-router-dom";
 import "./App.css";
 
-const API = "https://dtang-in-memory-api.herokuapp.com";
+// const API = "https://dtang-in-memory-api.herokuapp.com";
+const API = "http://localhost:8000";
 
 export default class App extends React.Component {
   render() {
