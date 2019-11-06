@@ -48,11 +48,29 @@ class PostsPage extends React.Component {
     const posts = await response.json();
     this.setState({ posts });
   }
+  deletePost = async id => {
+    await fetch(`${API}/api/posts/${id}`, {
+      method: "DELETE"
+    });
+
+    this.setState({
+      posts: this.state.posts.filter(post => {
+        return post.id !== id;
+      })
+    });
+  };
   render() {
     return (
       <ul>
         {this.state.posts.map(post => {
-          return <li key={post.id}>{post.title}</li>;
+          return (
+            <li key={post.id}>
+              {post.title}
+              <button onClick={this.deletePost.bind(this, post.id)}>
+                Delete
+              </button>
+            </li>
+          );
         })}
       </ul>
     );
