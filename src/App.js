@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const API = "https://dtang-in-memory-api.herokuapp.com";
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: []
+    };
+  }
+  async componentDidMount() {
+    const response = await fetch(`${API}/api/posts`);
+    const posts = await response.json();
+    this.setState({ posts });
+  }
+  render() {
+    return (
+      <Router>
+        <h1>My Blog</h1>
+        <nav>
+          <ul>
+            {this.state.posts.map(post => {
+              return <li key={post.id}>{post.title}</li>;
+            })}
+          </ul>
+        </nav>
+      </Router>
+    );
+  }
 }
-
-export default App;
